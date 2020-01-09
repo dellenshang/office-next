@@ -1,0 +1,140 @@
+.ivu-table {
+  .big-font-size-table & {
+    font-size: 14px;
+  }
+  .ivu-table-header {
+    th {
+      font-size: 14px;
+    }
+  }
+  .ivu-table-body {
+    tr {
+      // 这条代替stripe
+      &:nth-child(2n) td {
+        background-color: $table-td-stripe;
+      }
+      // 土 日
+      &.sat td {
+        background-color: $table-td-sat;
+      }
+      &.sun td {
+        background-color: $table-td-sun;
+      }
+    }
+  }
+  th {
+    background-color: $table-head;
+    text-align: center;
+    color: $white;
+    border-bottom: 1px solid $table-head-border;
+    border-right: 1px solid $table-head-border;
+    // 出勤	外出	戻り	退勤
+    &.checkin {
+      background-color: $light-blue;
+      color: $table-th-checkin;
+      border-bottom: 1px solid $border-grey;
+      border-right: 1px solid $border-grey;
+    }
+    // 遅刻	早退	外出
+    &.urgent {
+      background-color: $light-pink;
+      color: $red;
+      border-bottom: 1px solid $border-grey;
+      border-right: 1px solid $border-grey;
+    }
+  }
+  td {
+    // 表格边框颜色加深
+    border-color: $table-border;
+  }
+  td,
+  th {
+    height: 23px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    .ivu-table-cell {
+      padding-left: 8px;
+      padding-right: 8px;
+      // max-height: 100vh;
+    }
+  }
+  // 长表格格子间距，如月间日间，申请承认
+  .long-table & {
+    td:not(.select),
+    th:not(.select) {
+      .ivu-table-cell {
+        padding-left: 2px;
+        padding-right: 2px;
+      }
+    }
+  }
+  // 日间表格 激活class
+  tr {
+    &.select-col:hover td {
+      cursor: pointer;
+      background-color: $table-td-hover;
+      .ivu-progress-bg:before {
+        content: '';
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $white;
+        border-radius: 10px;
+        animation: ivu-progress-active 2s ease-in-out infinite;
+      }
+    }
+  }
+}
+
+// 申请表格的特殊处理
+.ivu-table-wrapper {
+  &.deny {
+    flex: 0;
+    border-left: 0;
+    width: 50px;
+    .ivu-table {
+      td {
+        height: 57px;
+      }
+    }
+    .ivu-table-tip {
+      display: none;
+    }
+  }
+  &.confirm {
+    flex: 1;
+  }
+  .ivu-checkbox-wrapper {
+    margin-left: 0;
+  }
+}
+
+.el-table {
+  .el-table__header {
+    th {
+      padding-top: 3px;
+      padding-bottom: 3px;
+      background-color: $table-head;
+      text-align: center;
+      color: $white;
+      border-right: 1px solid $table-head-border;
+    }
+  }
+  .el-table__body {
+    td {
+      height: 23px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+    }
+  }
+}
+.el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: $light-blue !important;
+}

@@ -1,0 +1,123 @@
+.ivu-layout .ivu-layout-header {
+    padding: 0;
+    margin-bottom: -1px;  /* 按钮和sider减少1px*/
+    height: 50px;
+    background:#fff;
+    z-index: 900;
+    position: fixed;
+    top: 0px;
+    width: 100vw;
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
+  }
+  .ivu-layout-header .ivu-menu-horizontal {
+    height: 50px;
+    line-height: 50px;
+  }
+  .ivu-layout .ivu-menu-light {
+    background: transparent;
+    text-align: center;
+  }
+  .ivu-layout-header .ivu-dropdown {
+    position: absolute;
+    right: 0;
+    padding-right: 20px;
+    line-height: 45px;
+  }
+  .ivu-dropdown a {
+    color: #515a6e;
+  }
+  .ivu-layout-header .ivu-dropdown i.ivu-icon-md-contact {
+    color: #ffcc6a;
+    font-size: 2.5em;
+  }
+  .ivu-layout-header .ivu-dropdown-rel {
+    height: 45px;
+  }
+  .ivu-layout-header .ivu-menu-item {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  .ivu-layout-header .ivu-menu-horizontal.ivu-menu-light:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 0px;
+    background: $input-border-grey;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+//  打刻原本的input框样式
+//  .punch_cbox.ivu-form.ivu-input{
+//     height: 45px;
+//     font-size: 1.5em;
+//     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+//     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+//   }
+
+//  打刻clock框样式
+.shadow {
+  margin-top:35px;
+  margin-bottom:50px;
+  z-index: 0;
+  height: 150px;
+	position: relative;
+	// max-width: 314px;
+	box-shadow: 0px 1px 4px rgba(0,0,0,0.3),
+				0px 0px 20px rgba(0,0,0,0.1) inset;
+}
+.shadow::before,
+.shadow::after {
+   content:"";
+   position:absolute;
+   z-index:-1;
+   bottom:15px;
+   left:10px;
+   width:50%;
+   height:20%;
+   box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
+   transform:rotate(-3deg);
+}
+.shadow::after{
+   right:10px;
+   left:auto;
+   transform:rotate(3deg);
+ }
+.clock{
+  background: $clock-background;
+  // border-radius:25px; 
+  // margin-left:20px; 
+  // margin-right:20px; 
+  padding: 25px;
+  // box-shadow: 0 15px 30px -3px rgba(45, 143, 255, 0.25);
+}
+.week-style{
+  display: flex;
+  color: $light-grey;
+  background-color: $white;
+  // color: $white;
+  // margin-bottom: 10px;
+  padding-top: 10px;
+  box-shadow: inset 0px 15px 10px -20px #000;
+  span {
+    flex: 1;
+  }
+}
+.hour-style{
+  // background:rgba(201, 231, 255, 0.25);
+  background-color: $white;
+  // border-radius:5px;
+  // color: $white;
+  // font-size: 2.5rem;
+  padding-bottom: 3px;
+  font-weight: bold;
+  // box-shadow: inset 0 2px 10px rgba(27, 126, 249 , 0.55);
+  // text-shadow: 0 0 10px rgba(25, 112, 212, 0.25);
+}
+.date-style{
+  background-color: $white;
+  padding-bottom: 10px;
+  // color: $white;
+  // margin-top: 10px;
+
+}

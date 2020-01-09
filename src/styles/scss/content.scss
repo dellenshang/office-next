@@ -1,0 +1,105 @@
+.content {
+  // 这里减去的就是sider的paddingtop撑起的header的50高度，少一是为了隐藏sider最上处的激活线
+  min-height: calc(100vh - 51px);
+  background-color: $white;
+  border: 1px solid transparent;
+  // border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 7px;
+  .content_head {
+    padding: 12px 25px 12px 12px;
+    border-bottom: solid 1px $border-grey;
+    background: $white;
+  }
+  .content_body {
+    // 在1532的轻薄商务本分辨率下
+    // padding-r每逢19，25等特殊px时会让表格出现滚动条
+    padding: 15px 26px 20px 12px;
+    background-color: $white;
+    margin-bottom: 50px;
+    .table-top {
+      text-align: left;
+      padding: 8px;
+      background: $white;
+      border: solid 1px $border-grey;
+      border-bottom: none;
+    }
+  }
+  .searchwrap {
+    background-color: $searchwrap-background;
+    padding: 8px;
+    margin-top: 15px;
+    @include flex-row(flex-start);
+    .ivu-select {
+      width: 15%;
+    }
+    .label {
+      width: 120px;
+      line-height: 32px;
+      text-align: right;
+      padding-right: 10px;
+      background-color: $form-label;
+      color: $white;
+    }
+    .mar {
+      margin-right: 30px;
+    }
+    .ivu-page .ivu-select {
+      width: 100%;
+    }
+    .ivu-select-selection,.ivu-input{
+      border-radius: 1px;
+    }
+  }
+  .btnbox {
+    flex: 1;
+    @include flex-row(flex-end);
+    button {
+      margin: 5px 0 0 5px;
+    }
+    &.ivu-btn {
+      margin-right: 10px;
+    }
+  }
+  .ivu-upload-list {
+    margin-top: 0;
+  }
+  .ivu-page {
+    margin-top: 0;
+  }
+  .header {
+    @include flex-row(center);
+    .title1 {
+      h1 {
+        font-size: 16px;
+      }
+      i {
+        font-size: 30px;
+        padding: 5px 6px;
+        margin-right: 8px;
+        color: $theme-blue;
+        vertical-align: middle;
+        flex: 1;
+      }
+    }
+  }
+}
+// 出力file的特殊覆盖
+.output-excel {
+  .ivu-select-selection,.ivu-input,button {
+    border-radius: 1px;
+  }
+  .ivu-select,.ivu-input {
+    vertical-align: top;
+  }
+  .ivu-input-wrapper {
+    line-height: 33px;
+  }
+  .output {
+    .ivu-poptip-rel {
+      width: 200px;
+      .ivu-btn {
+        width: 100%;
+      }
+    }
+  }
+}
