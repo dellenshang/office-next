@@ -8,14 +8,14 @@ import i18n from '../i18n'
 Vue.use(Router)
 const VUE = Vue.prototype
 const router = new Router({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes: defaultRoutes
 })
 
 const resetRouter = () =>
   new Router({
-    mode: 'history',
+    mode: 'hash',
     base: process.env.BASE_URL,
     routes: defaultRoutes
   })

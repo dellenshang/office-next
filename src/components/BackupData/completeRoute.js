@@ -125,6 +125,20 @@ export default [
             actions: 'update:list:delete:add'
           },
           {
+            menuId: 59,
+            parentId: 2,
+            name: '特別休暇管理',
+            url: 'sys/vacation/specialRest',
+            perms: 'sys:vacation:config:list',
+            type: 1,
+            level: '0.1.2',
+            icon: 'i-rest-config',
+            componentName: null,
+            toChildUrl: null,
+            orderNum: 91,
+            actions: 'update:list:delete:add'
+          },
+          {
             menuId: 67,
             parentId: 2,
             name: '年次有休出力',

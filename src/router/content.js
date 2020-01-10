@@ -39,6 +39,7 @@ export const routeMap = {
   'sys/vacation/view': happy('HappyTimeStatus'),
   'sys/vacation/config': happy('RestTimeConfig'),
   'sys/vacation/output': happy('HappyTimeOutput'),
+  'sys/vacation/specialRest': happy('SpecialRest'),
 
   // ロール管理
   'sys/master/role': master('PermissionRegister'),
