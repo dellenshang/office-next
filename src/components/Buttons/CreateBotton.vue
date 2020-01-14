@@ -30,7 +30,8 @@ export default {
   components: {
     MenuAdd: Modals.MenuAdd,
     HappyTimeAdd: Modals.HappyTimeAdd,
-    RestTypeAdd: Modals.RestTypeAdd
+    RestTypeAdd: Modals.RestTypeAdd,
+    MachineAdd: Modals.MachineAdd
   },
   data: function() {
     return {
@@ -57,6 +58,8 @@ export default {
           return '有休設定登録'
         case 'RestTypeAdd':
           return '休暇申請登録'
+        case 'MachineAdd':
+          return '端末登録'
       }
     }
   }

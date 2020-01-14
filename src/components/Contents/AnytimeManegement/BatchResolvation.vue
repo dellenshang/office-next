@@ -12,7 +12,6 @@
           <RadioGroup v-model="batch">
             <Radio :label="1" class="custom-radio">所属配分</Radio>
             <Radio :label="2" class="custom-radio">有休配分</Radio>
-            <Radio :label="3" class="custom-radio">承認者配分</Radio>
           </RadioGroup>
         </div>
       </div>
@@ -149,7 +148,7 @@ export default {
     }
   },
   async created() {
-    this.getData()
+    // this.getData()
   },
   computed: {
     ...mapState(['dept', 'happy', 'user']),
@@ -200,16 +199,14 @@ export default {
   methods: {
     ...mapActions(['happy/Action_Happy_Get', 'user/Action_User_Leader_Get']),
     async getData() {
-      this['happy/Action_Happy_Get']({ context: this })
-      this['user/Action_User_Leader_Get']()
     },
     async fetchTransferUserList() {
       if (this.batch === 3) {
-        const { data } = await this.api.user('view', { isLeader: false })
-        this.transferDeptList = data
+        // const { data } = await this.api.user('view', { isLeader: false })
+        this.transferDeptList = []
       } else {
-        const { data } = await this.api.user('view')
-        this.transferDeptList = data
+        // const { data } = await this.api.user('view')
+        this.transferDeptList = []
       }
     },
     handleCascaderView(labels) {

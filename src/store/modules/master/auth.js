@@ -8,7 +8,141 @@ export const auth = {
     rawMenu: [],
     headMenu: [],
     casMenu: [],
-    treeMenu: [],
+    treeMenu: [
+      {
+        value: 1,
+        title: "システム",
+        children: [
+          {
+            value: 39,
+            title: "随時処理",
+            children: [
+              { value: 68, title: "ホーム" },
+              { value: 67, title: "月间勤务状况" },
+              { value: 70, title: "日别勤务状况" },
+              { value: 65, title: "休暇申請" },
+              { value: 71, title: "超过勤务状况" },
+              {
+                value: 48,
+                title: "バッチ処理",
+                children: [
+                  { value: 50, title: "承认者バッチ処理" },
+                  { value: 51, title: "所属バッチ処理" },
+                  { value: 52, title: "有休バッチ処理" }
+                ]
+              },
+              {
+                value: 40,
+                title: "セッティング",
+                children: [
+                  { value: 61, title: "カスタマイズ" },
+                  { value: 62, title: "個人情報変更" },
+                  { value: 63, title: "パスワード更新" }
+                ]
+              },
+              { value: 69, title: "打刻履历" }
+            ]
+          },
+          {
+            value: 72,
+            title: "日報",
+            children: [
+              { value: 73, title: "project登録" },
+              { value: 74, title: "日报一览" }
+            ]
+          },
+          {
+            value: 2,
+            title: "有休管理",
+            children: [
+              {
+                value: 16,
+                title: "有休設定管理",
+                children: [{ value: 36, title: "追加模式" }]
+              },
+              { value: 17, title: "有休取得一覧" },
+              {
+                value: 53,
+                title: "休暇申請設定",
+                children: [
+                  { value: 57, title: "休暇申請設定追加" },
+                  { value: 58, title: "休暇申請設定更新" },
+                  { value: 59, title: "休暇申請設定删除" }
+                ]
+              },
+              { value: 78, title: "特休取得条件管理" }
+            ]
+          },
+          {
+            value: 3,
+            title: "マスタ登録",
+            children: [
+              {
+                value: 10,
+                title: "権限管理",
+                children: [
+                  { value: 42, title: "追加权限" },
+                  { value: 43, title: "更新权限" },
+                  { value: 44, title: "删除权限" }
+                ]
+              },
+              { value: 8, title: "所属管理" },
+              {
+                value: 7,
+                title: "アカウント管理",
+                children: [
+                  { value: 45, title: "アカウント追加" },
+                  { value: 46, title: "アカウント更新" },
+                  { value: 47, title: "アカウント削除" }
+                ]
+              },
+              {
+                value: 11,
+                title: "社員管理",
+                children: [
+                  { value: 26, title: "追加" },
+                  { value: 37, title: "更新" },
+                  { value: 38, title: "删除" }
+                ]
+              },
+              { value: 79, title: "社员区分登陆" },
+              { value: 81, title: "勤务体系登录" },
+              { value: 80, title: "勤怠对象外社员登录" },
+              { value: 82, title: "祝日登录" },
+              { value: 83, title: "端末登陆" }
+            ]
+          },
+          {
+            value: 4,
+            title: "システム",
+            children: [
+              { value: 14, title: "操作ログ" },
+              { value: 15, title: "エラーログ" },
+              { value: 6, title: "メニュー管理" },
+              { value: 9, title: "セッティング" },
+              { value: 12, title: "ログインログ" },
+              { value: 13, title: "アクセスログ" }
+            ]
+          },
+          {
+            value: 5,
+            title: "申請・承認",
+            children: [
+              { value: 64, title: "申請承認" },
+              { value: 18, title: "申請状況一覧" }
+            ]
+          },
+          {
+            value: 75,
+            title: "月次处理",
+            children: [
+              { value: 76, title: "月结" },
+              { value: 77, title: "张票出力" }
+            ]
+          }
+        ]
+      }
+    ],
     tableMenu: [],
     dynamicRoutes: []
   },

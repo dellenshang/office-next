@@ -79,8 +79,22 @@ export default {
     }
   },
   methods: {
-    async handleBtn(id) {
-      const { data } = await this.api.role('searchById', { id })
+    handleBtn(id) {
+      const data = {
+    roleId: 2,
+    name: "一般",
+    remark: null,
+    role: "normal",
+    menuList: [
+      { menuId: 40, name: "セッティング" },
+      { menuId: 61, name: "カスタマイズ" },
+      { menuId: 62, name: "個人情報変更" },
+      { menuId: 63, name: "パスワード更新" },
+      { menuId: 65, name: "休暇申請" },
+      { menuId: 67, name: "月间勤务状况" },
+      { menuId: 68, name: "ホーム" }
+    ]
+  }
       const _updateData = this.$refs.updateData
       this.choosedLeaf = data.menuList.map(e => e.menuId)
       const curTree = this.utils.deepClone(this.treeData)
