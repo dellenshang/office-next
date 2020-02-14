@@ -3,22 +3,24 @@
     <Layout>
       <Header>
         <Menu mode="horizontal" theme="light" :active-name="$route.meta.parentId">
-          <VHeader/>
+          <VHeader />
         </Menu>
       </Header>
       <Layout>
-        <Sider width=200 v-model="isCollapsed" collapsible :collapsed-width="45">
+        <Sider width="200" v-model="isCollapsed" collapsible :collapsed-width="45">
           <Menu theme="light" width="auto" class="sider-left" :active-name="$route.meta.name">
-             <MasterSider :currentSider="$route.meta.parentId"/>
+            <MasterSider :currentSider="$route.meta.parentId" />
           </Menu>
         </Sider>
         <Layout @scroll.native.passive="handleScroll" ref="layout">
-            <keep-alive :include="keepAliveRoute">
-              <router-view/>
-            </keep-alive>
+          <keep-alive :include="keepAliveRoute">
+            <router-view />
+          </keep-alive>
         </Layout>
       </Layout>
-      <span :class="toTopBtn" v-show="isScroll" @click="toTop"><Icon type="md-arrow-round-up" size="24"/></span>
+      <span :class="toTopBtn" v-show="isScroll" @click="toTop">
+        <Icon type="md-arrow-round-up" size="24" />
+      </span>
       <!-- <Footer class="myapp layout-footer-center">2019 &copy; SmartOffice</Footer> -->
     </Layout>
   </div>
@@ -69,7 +71,7 @@ export default {
       tabIndex: '0',
       tabs: 1,
       isCollapsed: false,
-      keepAliveRoute:['DepartmentRegister','PersonalApply'],
+      keepAliveRoute: ['DepartmentRegister', 'PersonalApply'],
       historyPage: [],
       isScroll: false
     }

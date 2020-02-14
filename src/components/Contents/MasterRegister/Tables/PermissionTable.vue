@@ -44,19 +44,13 @@ export default {
     return {
       columns: [
         {
-          title: '授权标识',
-          slot: 'role',
-          minWidth: 100,
-          align: 'center'
-        },
-        {
-          title: '角色名称',
+          title: '権限名称',
           slot: 'name',
           minWidth: 50,
           align: 'center'
         },
         {
-          title: '备注',
+          title: '備考',
           slot: 'remark',
           minWidth: 300,
           align: 'center'

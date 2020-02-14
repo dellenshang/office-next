@@ -46,6 +46,8 @@ export const routeMap = {
   // 所属長設定
   'sys/master/leader': master('MinisterRegister'),
   'sys/master/machine': master('MachineRegister'),
+  'sys/master/usertype': master('EmployeeTypeRegister'),
+  'sys/master/happyday': master('HolidayRegister'),
 
   // system
   'sys/settings/menu': master('MenuRegister'),

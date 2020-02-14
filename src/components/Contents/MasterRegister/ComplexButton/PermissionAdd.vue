@@ -9,22 +9,19 @@
     >追加</Button>
     <Modal
       v-model="isShow"
-      :title="isAdd ? '角色追加': '角色訂正'"
+      :title="isAdd ? '権限追加': '権限訂正'"
       footer-hide
       :mask-closable="false"
       @on-cancel="cancel"
     >
       <Form :label-width="120" ref="localValue" :model="localValue" :rules="ruleValidate">
-        <FormItem label="角色名称" prop="name">
-          <Input v-model="localValue.name" placeholder="角色名称" :maxlength="15"></Input>
+        <FormItem label="権限名称" prop="name">
+          <Input v-model="localValue.name" placeholder="権限名称" :maxlength="15"></Input>
         </FormItem>
-        <FormItem label="授权标识" prop="role">
-          <Input v-model="localValue.role" placeholder="授权标识" :maxlength="100"></Input>
+        <FormItem label="備考" prop="remark">
+          <Input v-model="localValue.remark" placeholder="備考" :maxlength="100"></Input>
         </FormItem>
-        <FormItem label="备注" prop="remark">
-          <Input v-model="localValue.remark" placeholder="备注" :maxlength="100"></Input>
-        </FormItem>
-        <div class="label">授权</div>
+        <div class="label">詳細</div>
         <Tree class="tree" :data="treeData" ref="tree" show-checkbox></Tree>
       </Form>
       <div class="my-footer">
@@ -83,13 +80,6 @@ export default {
       },
       ruleValidate: {
         name: [
-          {
-            required: true,
-            message: '入力してください',
-            trigger: 'blur'
-          }
-        ],
-        role: [
           {
             required: true,
             message: '入力してください',

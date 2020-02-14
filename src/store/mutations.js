@@ -35,7 +35,11 @@ export default {
   setDept_List(state, payload) {
     if (payload.deptId === 1) {
       if (payload.isAdd) {
-        payload.arr.children = [...payload.arr.children, { deptId: Date.now(), name: '', children: [], isAdd: true, status: 1, parentId: payload.arr.deptId }]
+        if(payload.arr.children) {
+          payload.arr.children = [...payload.arr.children, { deptId: Date.now(), name: '', children: [], isAdd: true, status: 1, parentId: payload.arr.deptId }]
+        } else {
+          payload.arr.children = [{ deptId: Date.now(), name: '', children: [], isAdd: true, status: 1, parentId: payload.arr.deptId }]
+        }
         return
       }
       payload.arr.name = payload.name

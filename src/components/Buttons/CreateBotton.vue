@@ -31,7 +31,9 @@ export default {
     MenuAdd: Modals.MenuAdd,
     HappyTimeAdd: Modals.HappyTimeAdd,
     RestTypeAdd: Modals.RestTypeAdd,
-    MachineAdd: Modals.MachineAdd
+    MachineAdd: Modals.MachineAdd,
+    EmployeeTypeAdd: Modals.EmployeeTypeAdd,
+    HolidayAdd: Modals.HolidayAdd
   },
   data: function() {
     return {
@@ -60,6 +62,10 @@ export default {
           return '休暇申請登録'
         case 'MachineAdd':
           return '端末登録'
+        case 'EmployeeTypeAdd':
+          return '職員区分登録'
+        case 'HolidayAdd':
+          return '祝日登録'
       }
     }
   }

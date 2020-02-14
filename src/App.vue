@@ -14,21 +14,22 @@
 }
 
 .slide-in-enter-active {
-  opacity: 1;
+  will-change: transform;
   animation: slideInFromRight 1s forwards cubic-bezier(0.7, 0, 0.3, 1);
 }
 .slide-in-leave-active {
+  will-change: transform;
   animation: slideOutScaleLeft 1s forwards cubic-bezier(0.7, 0, 0.3, 1);
 }
 .slide-out-enter-active {
-  opacity: 1;
+  will-change: transform, opacity;
   animation: slideInFromLeft 1s forwards cubic-bezier(0.7, 0, 0.3, 1);
 }
 .slide-out-leave-active {
+  will-change: transform, opacity;
   animation: slideOutScaleRight 1s forwards cubic-bezier(0.7, 0, 0.3, 1);
 }
 .refresh-enter-active {
-  opacity: 1;
   animation: scaleDownUp 0.7s forwards cubic-bezier(0.7, 0, 0.3, 1);
 }
 
@@ -43,6 +44,7 @@
 
 @keyframes slideInFromLeft {
   from {
+    opacity: 0;
     transform: translateX(-100%);
   }
   to {
@@ -61,9 +63,11 @@
 
 @keyframes slideInFromRight {
   from {
+    opacity: 0;
     transform: translateX(100%);
   }
   to {
+    opacity: 1;
     transform: translateX(0);
   }
 }
@@ -78,6 +82,22 @@
     transform: scale(1);
   }
 }
+// 备用
+// #nav {
+//   @include flex-column(flex-start);
+//   flex: 1;
+//   position: fixed;
+//   left: 0;
+//   top: 0;
+//   bottom: 0;
+//   padding: 30px;
+//   a {
+//     font-weight: bold;
+//     &.router-link-exact-active {
+//       color: $vue-green;
+//     }
+//   }
+// }
 </style>
 
 <script>
@@ -91,11 +111,15 @@ export default {
   watch: {
     $route(to, from) {
       const toPath = to.path
-      const fromPath = from.path
-      if (fromPath === '/' && toPath === '/home') {
-        this.login = 'slide-in'
+      // const fromName = from.name
+      if (!to.name) {
         return
       }
+      // 登陆特有过渡
+      // if (fromName === 'login') {
+      //   this.login = 'slide-in'
+      //   return
+      // }
       if (toPath === '/') {
         this.login = 'slide-out'
         return

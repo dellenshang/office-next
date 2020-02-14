@@ -104,19 +104,17 @@ export default {
   computed: {
     ...mapState(['dept']),
     data() {
-      return this.dept.searchList instanceof Array
-        ? this.dept.searchList
-        : [this.dept.searchList]
+      return this.dept.searchList
     }
   },
   created() {
-    this.Action_Dept_Get()
+    // this.Action_Dept_Get()
   },
   activated() {
     if (this.fetchfix) {
       return this.fetchfix = false
     }
-    this.Action_Dept_Get()
+    // this.Action_Dept_Get()
   },
   methods: {
     ...mapActions([
