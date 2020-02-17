@@ -5,6 +5,7 @@ export default {
     'rgb(240,216,45)',
     'rgb(45,240,230)'
   ],
+  animationEasing: 'cubicInOut',
   animationDuration: 1500,
   backgroundColor: 'rgba(252,252,252,0)',
   textStyle: {},
