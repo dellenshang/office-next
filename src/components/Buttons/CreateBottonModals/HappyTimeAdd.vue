@@ -49,7 +49,7 @@
                 <Alert class="primary-info" v-show="localValue.type === 1">週の所定労働日数が<strong>5日以上</strong>かつ週所定労働時間<strong>30時間以上</strong>の労働者。</Alert>
               <Col span="11" v-show="localValue.type === 2">
                 <Divider size="small" orientation="left">入社年</Divider>
-                <Alert class="primary-info">入社日あるいは法定（６ヵ月後）付与は次のページへ設定してください。</Alert>
+                <Alert class="primary-info">入社日あるいは法定（６ヵ月後）付与は次のページに設定してください。</Alert>
               </Col>
               <Col span="11" offset="2" v-show="localValue.type === 2">
                 <Divider size="small" orientation="left">入社２年目以降</Divider>
@@ -263,18 +263,20 @@
   .ivu-select-selection {
     height: 39px;
     border-radius: 23px;
-    .ivu-select-selected-value, .ivu-select-placeholder{
-    padding: 4px 13px;
-    font-size: 14px;
-    text-align: center;
+    .ivu-select-selected-value,
+    .ivu-select-placeholder {
+      padding: 4px 13px;
+      font-size: 14px;
+      text-align: center;
     }
   }
 }
 .custom-table {
-text-align: left;padding: 0 50px 0 43px;
-&.muti-first-column {
-  padding-left: 143px;
-}
+  text-align: left;
+  padding: 0 50px 0 43px;
+  &.muti-first-column {
+    padding-left: 143px;
+  }
 }
 .custom-radio {
   padding: 8px 13px;
@@ -307,15 +309,6 @@ text-align: left;padding: 0 50px 0 43px;
   font-size: 14px;
   background: $primary;
   color: white;
-}
-.primary-info {
-  color: $primary;
-  border: $primary-border;
-  font-size: 14px;
-  text-align: left;
-  strong {
-    font-size: 15px;
-  }
 }
 .first-column {
   position: absolute;
@@ -421,17 +414,10 @@ text-align: left;padding: 0 50px 0 43px;
 
 <script>
 /* eslint-disable prettier/prettier */
-import { Debounce } from '@/api/utils'
-import temEmployee from './animatedSVG/temEmployee'
-const NEW_EMPOLYEE =
-  '新入社員の特徴は当年度の基準日が越えないと、次の基準日に10日に付与して、越えたら、前倒し付与できて、日数が10日以内になっております。次の基準日に10日になって、勤続年数ごとに日数が増えます。'
-const OLD_EMPOLYEE =
-  '先輩社員の特徴は有休日数が直ちに付与できて、10日以内の制限がありません。勤続年数ごとに日数が増えます。'
-const TEMP_EMPOLYEE =
-  '短期社員の特徴は有休日数が入社日から直接に付与、日数が固定です。'
+// import { Debounce } from '@/api/utils'
 export default {
   name: 'HappyTimeAdd',
-  components: { temEmployee },
+  components: {},
   data: function() {
     return {
       currentStep: 0,
@@ -558,22 +544,24 @@ export default {
       mixTypeValue: [
         {
           standardDate: '',
-          startDays:0,
-          endDays:0,
+          startDays: 0,
+          endDays: 0,
           hireStartMonth: 0,
-          weekWorkDays:0,
+          weekWorkDays: 0,
           hireEndMonth: 0,
           advanceDays: 0,
           // 中间辅助字段
           workYears: 0,
-          standardDateSequence: [{ workYears: '入社日', paidDays: 0, extra: true },
-              { workYears: '６ヵ月後', paidDays: 5, extra: true }]
+          standardDateSequence: [
+            { workYears: '入社日', paidDays: 0, extra: true },
+            { workYears: '1年目', paidDays:10, extra: true }
+          ]
         }
       ],
-      forMixCenterValue:[],
-      mixTypeValuefinal:{
-        workYears:0,
-        paidDays:[{value:0,ending: true }]
+      forMixCenterValue: [],
+      mixTypeValuefinal: {
+        workYears: 0,
+        paidDays: [{ value: 0, ending: true }]
       }
     }
   },
@@ -593,12 +581,11 @@ export default {
     },
     // 是否是根据手动指定基准日，此模式下，为绿色
     hasStandardDate() {
-      if (this.localValue.type === 2 && this.localValue.nextYearType !== 1)
-        return true
+      if (this.localValue.type === 2 && this.localValue.nextYearType !== 1) return true
       else return false
     },
     showScrollBar() {
-      if(this.localValue.type === 2 && this.localValue.nextYearType === 3) {
+      if (this.localValue.type === 2 && this.localValue.nextYearType === 3) {
         return true
       }
       if (this.byWorkYearData.length > 6) {
@@ -614,7 +601,7 @@ export default {
     },
     daynamicChart() {
       const isYearFixed = this.localValue.type === 1 ? false : true
-      const rows = this.byWorkYearData.map((e, i) => {
+      const rows = this.byWorkYearData.map(e => {
         if (e.extra) return { workYears: `${e.workYears}`, paidDays: e.paidDays }
         else
           return {
@@ -643,42 +630,43 @@ export default {
       // 在这里做出表头
       let centerColumns = []
       // 如果是多个基准日
-      if(this.localValue.paidType=== 1 && this.localValue.nextYearType === 3) {
-        centerColumns = this.mixTypeValue.map(e=>{
-        let hireStartMonth = e.hireStartMonth || ''
-        let hireEndMonth = e.hireEndMonth || ''
-        return `${hireStartMonth}月~${hireEndMonth}月`
-      })
+      if (this.localValue.paidType === 1 && this.localValue.nextYearType === 3) {
+        centerColumns = this.mixTypeValue.map(e => {
+          let hireStartMonth = e.hireStartMonth || ''
+          let hireEndMonth = e.hireEndMonth || ''
+          return `${hireStartMonth}月~${hireEndMonth}月`
+        })
       }
-      if(this.localValue.proportionPaidType === 1) {
-        centerColumns = this.mixTypeValue.map(e=>{
-        let standardDays = e.startDays || ''
-        let endDays = e.endDays || ''
-        return `${standardDays}日~${endDays}日`
-      })
-        } else {
-      centerColumns = this.mixTypeValue.map(e=>{
-        let weekWorkDays = e.weekWorkDays || ''
-        return `週${weekWorkDays}日`
-      })
-        }
+      if (this.localValue.proportionPaidType === 1) {
+        centerColumns = this.mixTypeValue.map(e => {
+          let standardDays = e.startDays || ''
+          let endDays = e.endDays || ''
+          return `${standardDays}日~${endDays}日`
+        })
+      } else {
+        centerColumns = this.mixTypeValue.map(e => {
+          let weekWorkDays = e.weekWorkDays || ''
+          return `週${weekWorkDays}日`
+        })
+      }
       // const finalColumn = [`${this.mixTypeValuefinal.workYears}年目以降`]
       const headRow = ['workYears'].concat(centerColumns)
-      let formatedFinalCloumn = {...this.mixTypeValuefinal}
+      let formatedFinalCloumn = { ...this.mixTypeValuefinal }
       formatedFinalCloumn.workYears = `${formatedFinalCloumn.workYears}年以降`
       const rowData = this.forMixCenterValue.concat(formatedFinalCloumn)
 
       const a = this.dataTableToGraph(headRow, rowData)
       const result = {
-        columns:headRow,
-        rows:a
+        columns: headRow,
+        rows: a
       }
       console.log(result)
       return result
     },
     chartData() {
-      if(this.localValue.paidType === 2|| this.localValue.paidType === 1 && this.localValue.nextYearType === 3) return this.daynamicMixChart
-        else return this.daynamicChart
+      if (this.localValue.paidType === 2 || (this.localValue.paidType === 1 && this.localValue.nextYearType === 3))
+        return this.daynamicMixChart
+      else return this.daynamicChart
     }
   },
   watch: {
@@ -704,7 +692,7 @@ export default {
           if (newValue === 2) {
             this.byWorkYearData = [
               { workYears: '入社日', paidDays: 0, extra: true },
-              { workYears: '６ヵ月後', paidDays: 5, extra: true },
+              { workYears: '1年目', paidDays: 10, extra: true },
               { workYears: 2, paidDays: 11 },
               { workYears: 3, paidDays: 12 },
               { workYears: 4, paidDays: 14 },
@@ -724,92 +712,105 @@ export default {
     'localValue.paidType': {
       handler(newValue) {
         this.$nextTick(() => {
-          this.mixTypeValue = [{
-          standardDate: '',
-          hireStartMonth: 0,
-          hireEndMonth: 0,
-          advanceDays: 0,
-          workYears: 0,
-          standardDateSequence: [{ workYears: '入社日', paidDays: 0, extra: true },
-              { workYears: '６ヵ月後', paidDays: 5, extra: true }]
-        }
-      ]
-      this.mixTypeValuefinal = {
-        workYears:0,
-        paidDays:[{value:0,ending: true }]
-      }
-      if (newValue === 1) {
-        this.forMixCenterValue = [{
-          workYears: '入社日',
-          extra: true,
-          paidDays:[{value:0}]
-        },{
-          workYears: '６ヵ月後',
-          extra: true,
-          paidDays:[{value:10}]
-        }]
-        return
-      }
-      if (newValue === 2) {
-        this.localValue.nextYearType = null
-        this.localValue.type = 1
-        this.forMixCenterValue = [{
-          workYears: '0',
-          extra: true,
-          paidDays:[{value:0}]
-        },{
-          workYears: '0.5',
-          extra: true,
-          paidDays:[{value:10}]
-      }]
-        return
-      }
-      })
+          this.mixTypeValue = [
+            {
+              standardDate: '',
+              hireStartMonth: 0,
+              hireEndMonth: 0,
+              advanceDays: 0,
+              workYears: 0,
+              standardDateSequence: [
+                { workYears: '入社日', paidDays: 0, extra: true },
+                { workYears: '1年目', paidDays:10, extra: true }
+              ]
+            }
+          ]
+          this.mixTypeValuefinal = {
+            workYears: 0,
+            paidDays: [{ value: 0, ending: true }]
+          }
+          if (newValue === 1) {
+            this.forMixCenterValue = [
+              {
+                workYears: '入社日',
+                extra: true,
+                paidDays: [{ value: 0 }]
+              },
+              {
+                workYears: '1年目',
+                extra: true,
+                paidDays: [{ value: 10 }]
+              }
+            ]
+            return
+          }
+          if (newValue === 2) {
+            this.localValue.nextYearType = null
+            this.localValue.type = 1
+            this.forMixCenterValue = [
+              {
+                workYears: '0',
+                extra: true,
+                paidDays: [{ value: 0 }]
+              },
+              {
+                workYears: '0.5',
+                extra: true,
+                paidDays: [{ value: 10 }]
+              }
+            ]
+            return
+          }
+        })
       },
       immediate: true
     },
     'localValue.proportionPaidType': {
       handler(newValue) {
-        if(newValue === 1) {
-          this.mixTypeValue = [
-            {startDays:48, endDays:72}
+        if (newValue === 1) {
+          this.mixTypeValue = [{ startDays: 48, endDays: 72 }]
+          this.forMixCenterValue = [
+            {
+              workYears: '0',
+              extra: true,
+              paidDays: [{ value: 0 }]
+            },
+            {
+              workYears: '0.5',
+              extra: true,
+              paidDays: [{ value: 10 }]
+            }
           ]
-       this.forMixCenterValue = [{
-          workYears: '0',
-          extra: true,
-          paidDays:[{value:0}]
-        },{
-          workYears: '0.5',
-          extra: true,
-          paidDays:[{value:10}]
-      }]
-      this.mixTypeValuefinal = {
-        workYears:0,
-        paidDays:[{value:0,ending: true }]
-      }
+          this.mixTypeValuefinal = {
+            workYears: 0,
+            paidDays: [{ value: 0, ending: true }]
+          }
           return
         }
-        if(newValue === 2) {
+        if (newValue === 2) {
           // 周所定时为4个固定的值
-          this.mixTypeValue = [{weekWorkDays:1},{weekWorkDays:2},{weekWorkDays:3},{weekWorkDays:4}]
-          this.forMixCenterValue = [{
-            workYears: '0',
-            extra: true,
-            paidDays:[{value:0},{value:0},{value:0},{value:0}]
-          },{
-            workYears: '0.5',
-            extra: true,
-            paidDays:[{value:10},{value:10},{value:10},{value:10}]
-          }]
+          this.mixTypeValue = [{ weekWorkDays: 1 }, { weekWorkDays: 2 }, { weekWorkDays: 3 }, { weekWorkDays: 4 }]
+          this.forMixCenterValue = [
+            {
+              workYears: '0',
+              extra: true,
+              paidDays: [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }]
+            },
+            {
+              workYears: '0.5',
+              extra: true,
+              paidDays: [{ value: 10 }, { value: 10 }, { value: 10 }, { value: 10 }]
+            }
+          ]
           this.mixTypeValuefinal = {
-            workYears:0,
-            paidDays:[{value:20},{value:20},{value:20},{value:20}]
+            workYears: 0,
+            paidDays: [{ value: 20 }, { value: 20 }, { value: 20 }, { value: 20 }]
           }
           return
         }
       },
       immediate: true
-    },
+    }
   },
   methods: {
     cancel() {
@@ -836,8 +837,8 @@ export default {
     handleMixAdd() {
       // 复数基准日中间加一行
       const length = this.forMixCenterValue.length
-      let newOne = { workYears: 2, paidDays:this.utils.deepClone(this.forMixCenterValue[0].paidDays)}
-      if(length > 2) {
+      let newOne = { workYears: 2, paidDays: this.utils.deepClone(this.forMixCenterValue[0].paidDays) }
+      if (length > 2) {
         newOne.workYears = +this.forMixCenterValue[length - 1].workYears + 1
       }
       this.forMixCenterValue.push(newOne)
@@ -856,26 +857,26 @@ export default {
     // 复数基准日下追加行时
     addMixType() {
       this.mixTypeValue = this.mixTypeValue.concat({
-          standardDate: '',
-          hireStartMonth: 0,
-          hireEndMonth: 0,
-          advanceDays: 0,
-          // 中间辅助字段
-          workYears: 0,
-          standardDateSequence: [{ workYears: 1, paidDays: 0, ending: false }]
-        })
-        // 中间加其实是加每一条的深度
-        this.forMixCenterValue.forEach(e=>{
-          // 这里使用push的话会导致有些被push两次，但是打印次数发现是正确的
-          e.paidDays = e.paidDays.concat({value:1})
-        })
-        this.mixTypeValuefinal.paidDays = this.mixTypeValuefinal.paidDays.concat({value:0,ending: true })
+        standardDate: '',
+        hireStartMonth: 0,
+        hireEndMonth: 0,
+        advanceDays: 0,
+        // 中间辅助字段
+        workYears: 0,
+        standardDateSequence: [{ workYears: 1, paidDays: 0, ending: false }]
+      })
+      // 中间加其实是加每一条的深度
+      this.forMixCenterValue.forEach(e => {
+        // 这里使用push的话会导致有些被push两次，但是打印次数发现是正确的
+        e.paidDays = e.paidDays.concat({ value: 1 })
+      })
+      this.mixTypeValuefinal.paidDays = this.mixTypeValuefinal.paidDays.concat({ value: 0, ending: true })
     },
     minusMixType() {
       if (this.mixTypeValue.length === 1) return
       this.mixTypeValue.pop()
-      this.forMixCenterValue.forEach(e=>{
-          e.paidDays.pop()
+      this.forMixCenterValue.forEach(e => {
+        e.paidDays.pop()
       })
       this.mixTypeValuefinal.paidDays.pop()
     },
@@ -896,139 +897,162 @@ export default {
     addVactionMode() {
       const value = this.localValue
       const that = this
-      if(value.paidType === 2) {
-          const vacation = this.mixTypeValue.map((e,i)=>{
-            // 比例付与中不需要判断提前付玉
-            let otherForData = []
-            that.forMixCenterValue.forEach((e, j)=>{
-              return otherForData.push({
-                workYears: +e.workYears,
-                paidDays: +e.paidDays[i].value
-               })
+      if (value.paidType === 2) {
+        const vacation = this.mixTypeValue.map((e, i) => {
+          // 比例付与中不需要判断提前付玉
+          let otherForData = []
+          that.forMixCenterValue.forEach((e) => {
+            return otherForData.push({
+              workYears: +e.workYears,
+              paidDays: +e.paidDays[i].value
             })
-            const stepData = otherForData.concat([{ workYears: +that.mixTypeValuefinal.workYears, paidDays: +that.mixTypeValuefinal.paidDays[i].value }])
-            const workYearsList = stepData.map(e =>{
-              return{ workYears: e.workYears, paidDays:e.paidDays }
-            })
-            // 如果是按年间劳动日
-            if(this.localValue.proportionPaidType === 1) {
-              return {
-                byWeek: false,
-                startDays: +e.startDays,
-                endDays: +e.endDays,
-                workYearsList
-             }
-            }
-            // 如果是按周所定劳动日
-              return {
-                byWeek: true,
-                weekWorkDays: +e.weekWorkDays,
-                workYearsList
-             }
           })
-        console.log("比例付与")
+          const stepData = otherForData.concat([
+            { workYears: +that.mixTypeValuefinal.workYears, paidDays: +that.mixTypeValuefinal.paidDays[i].value }
+          ])
+          const workYearsList = stepData.map(e => {
+            return { workYears: e.workYears, paidDays: e.paidDays }
+          })
+          // 如果是按年间劳动日
+          if (this.localValue.proportionPaidType === 1) {
+            return {
+              byWeek: false,
+              startDays: +e.startDays,
+              endDays: +e.endDays,
+              workYearsList
+            }
+          }
+          // 如果是按周所定劳动日
+          return {
+            byWeek: true,
+            weekWorkDays: +e.weekWorkDays,
+            workYearsList
+          }
+        })
+        console.log('比例付与')
         console.log(vacation)
-        this.api.happy("addRate", vacation).then(()=> this.api.happy("fetch")).then(()=> this.$Message.success("完了"))
+        this.api
+          .happy('addRate', vacation)
+          .then(() => this.api.happy('fetch'))
+          .then(() => this.$Message.success('完了'))
 
         return
       }
-      if(value.paidType === 1) {
-        if(value.type===1) {
-          console.log("通常-勤务年数")
+      if (value.paidType === 1) {
+        if (value.type === 1) {
+          console.log('通常-勤务年数')
           // todo: 这里还需要判断第一条是不是为0
-          const hasAdvance= +this.byWorkYearData[0].workYears === 0
+          const hasAdvance = +this.byWorkYearData[0].workYears === 0
           const vacation = {
-            type:1,
-            normalVacation:{
-              type:1,
+            type: 1,
+            normalVacation: {
+              type: 1,
               name: this.localValue.name,
-              advanceDays:hasAdvance? +this.byWorkYearData[0].paidDays:0 ,
-              workYearList:hasAdvance? this.byWorkYearData.slice(1,this.byWorkYearData.length - 1).concat(this.byWorkYearDatafinal):this.byWorkYearData.concat(this.byWorkYearDatafinal)
+              advanceDays: hasAdvance ? +this.byWorkYearData[0].paidDays : 0,
+              workYearList: hasAdvance
+                ? this.byWorkYearData.slice(1, this.byWorkYearData.length - 1).concat(this.byWorkYearDatafinal)
+                : this.byWorkYearData.concat(this.byWorkYearDatafinal)
             }
           }
           console.log(vacation)
-          this.api.happy("add", vacation).then(()=> this.api.happy("fetch")).then(()=> this.$Message.success("完了"))
+          this.api
+            .happy('add', vacation)
+            .then(() => this.api.happy('fetch'))
+            .then(() => this.$Message.success('完了'))
           return
         }
-        if(value.nextYearType ===1) {
-          console.log("通常-指定日-法定")
-          const hasAdvance= +this.byWorkYearData[0].paidDays !== 0
-          let PreTwoData = [{workYears:1, paidDays:10 - this.byWorkYearData[0].paidDays}]
-          let stepData = PreTwoData.concat(this.byWorkYearData.slice(2,this.byWorkYearData.length)).concat(this.byWorkYearDatafinal)
-          stepData = stepData.map(e=>{
-            return{workYears: e.workYears, paidDays:+e.paidDays}
+        if (value.nextYearType === 1) {
+          console.log('通常-指定日-法定')
+          const hasAdvance = +this.byWorkYearData[0].paidDays !== 0
+          let PreTwoData = [{ workYears: 1, paidDays: this.byWorkYearData[1].paidDays }]
+          let stepData = PreTwoData.concat(this.byWorkYearData.slice(2, this.byWorkYearData.length)).concat(
+            this.byWorkYearDatafinal
+          )
+          const _stepData = stepData.map(e => {
+            return { workYears: e.workYears - 0.5, paidDays: +e.paidDays }
           })
-          const standardDate = this.localValue.standardDate
           const vacation = {
             type: 1,
-            normalVacation:{
+            normalVacation: {
               type: 2,
               name: this.localValue.name,
               advanceDays: hasAdvance ? +this.byWorkYearData[0].paidDays : 0,
-              workYearList: stepData
+              workYearList: _stepData
             }
           }
           console.log(vacation)
-          this.api.happy("add", vacation).then(()=> this.api.happy("fetch")).then(()=> this.$Message.success("完了"))
+          this.api
+            .happy('add', vacation)
+            .then(() => this.api.happy('fetch'))
+            .then(() => this.$Message.success('完了'))
           return
         }
-        if(value.nextYearType ===2) {
-          console.log("通常-指定日-单基准日")
-          const hasAdvance= +this.byWorkYearData[0].paidDays !== 0
-          let PreTwoData = [{workYears:1, paidDays:10 - this.byWorkYearData[0].paidDays}]
-          let stepData = PreTwoData.concat(this.byWorkYearData.slice(2,this.byWorkYearData.length)).concat(this.byWorkYearDatafinal)
-          stepData = stepData.map(e=>{
-            return{stepYears: e.workYears, paidDays:+e.paidDays}
+        if (value.nextYearType === 2) {
+          console.log('通常-指定日-单基准日')
+          const hasAdvance = +this.byWorkYearData[0].paidDays !== 0
+          let PreTwoData = [{ workYears: 1, paidDays: this.byWorkYearData[1].paidDays }]
+          let stepData = PreTwoData.concat(this.byWorkYearData.slice(2, this.byWorkYearData.length)).concat(
+            this.byWorkYearDatafinal
+          )
+          stepData = stepData.map(e => {
+            return { stepYears: e.workYears, paidDays: +e.paidDays }
           })
           const standardDate = this.localValue.standardDate
           const vacation = {
             type: 2,
-            standardDateVacation:{
+            standardDateVacation: {
               name: this.localValue.name,
-              standardDate: `${standardDate.substring(0,2)}-${standardDate.substring(3,5)}`,
+              standardDate: `${standardDate.substring(0, 2)}-${standardDate.substring(3, 5)}`,
               advanceDays: hasAdvance ? +this.byWorkYearData[0].paidDays : 0,
               stepYearList: stepData
             }
           }
           console.log(vacation)
-          this.api.happy("add", vacation).then(()=> this.api.happy("fetch")).then(()=> this.$Message.success("完了"))
+          this.api
+            .happy('add', vacation)
+            .then(() => this.api.happy('fetch'))
+            .then(() => this.$Message.success('完了'))
           return
         }
       }
-          const vacation = {
-            type:3,
-            remark: this.localValue.remark,
-            mixedVacation:{
-              name:this.localValue.name,
-              mixedVacationList: this.mixTypeValue.map((e,i)=>{
-                // 每一条都要判断是不是有提前付与
-                const advanceDays = +that.forMixCenterValue[0].paidDays[i].value
-                const PreTwoData = [{ paidDays:10 - advanceDays}]
-                let otherForData = []
-                // 去除每一条的头两项付与日数（入社和半年后）
-                that.forMixCenterValue.forEach((e, j)=>{
-                  if (j === 0 || j === 1) return
-                  return otherForData.push({
-                     paidDays: +e.paidDays[i].value
-                   })
-                })
-                const stepData = PreTwoData.concat(otherForData).concat([{ paidDays: +that.mixTypeValuefinal.paidDays[i].value }])
-                const standardDateList = stepData.map((e,i)=>{
-                    return{stepYears: i + 1, paidDays:e.paidDays }
-                })
-                return {
-                  hireStartMonth: +e.hireStartMonth,
-                  hireEndMonth: +e.hireEndMonth,
-                  standardDate: `${e.standardDate.substring(0,2)}-01`,
-                  advanceDays: advanceDays > 0 ? advanceDays : 0,
-                  standardDateList
-                }
+      const vacation = {
+        type: 3,
+        remark: this.localValue.remark,
+        mixedVacation: {
+          name: this.localValue.name,
+          mixedVacationList: this.mixTypeValue.map((e, i) => {
+            // 每一条都要判断是不是有提前付与
+            const advanceDays = +that.forMixCenterValue[0].paidDays[i].value
+            let otherForData = []
+            // 去除每一条的头两项付与日数（入社和半年后）
+            that.forMixCenterValue.forEach((e, j) => {
+              if (j === 0) return
+              return otherForData.push({
+                paidDays: +e.paidDays[i].value
               })
+            })
+            const stepData = otherForData.concat([
+              { paidDays: +that.mixTypeValuefinal.paidDays[i].value }
+            ])
+            const standardDateList = stepData.map((e, i) => {
+              return { stepYears: i + 1, paidDays: e.paidDays }
+            })
+            return {
+              hireStartMonth: +e.hireStartMonth,
+              hireEndMonth: +e.hireEndMonth,
+              standardDate: `${e.standardDate.substring(0, 2)}-01`,
+              advanceDays: advanceDays > 0 ? advanceDays : 0,
+              standardDateList
             }
-          }
-      console.log("多基准日")
+          })
+        }
+      }
+      console.log('多基准日')
       console.log(vacation)
-      this.api.happy("add", vacation).then(()=> this.api.happy("fetch")).then(()=> this.$Message.success("完了"))
+      this.api
+        .happy('add', vacation)
+        .then(() => this.api.happy('fetch'))
+        .then(() => this.$Message.success('完了'))
     },
     back() {
       if (this.currentStep === 0) {
@@ -1037,7 +1061,7 @@ export default {
         return (this.currentStep = this.currentStep - 1)
       }
     },
-    afterConfig (options) {
+    afterConfig(options) {
       // options.series[0].itemStyle = {
       //   emphasis: {
       //     shadowBlur: 10,
@@ -1055,23 +1079,23 @@ export default {
       // options.series[0].data = [55,100,200,300]
       return options
     },
-    dataTableToGraph(headRow,rowData) {
+    dataTableToGraph(headRow, rowData) {
       console.log(rowData)
-    let result = []
-    const len = rowData.length
-    // 有几个基准日就循环几次
-    for (let i = 0; i < len; i++) {
-      let t = {}
-      // 创建echarts显示用数据
-      headRow.forEach((e,j)=>{
-        if(j=== 0 ) {
-          return t[e]= rowData[i].workYears
-        }
-        t[e]= rowData[i].paidDays[j-1].value
-      })
+      let result = []
+      const len = rowData.length
+      // 有几个基准日就循环几次
+      for (let i = 0; i < len; i++) {
+        let t = {}
+        // 创建echarts显示用数据
+        headRow.forEach((e, j) => {
+          if (j === 0) {
+            return (t[e] = rowData[i].workYears)
+          }
+          t[e] = rowData[i].paidDays[j - 1].value
+        })
         result = result.concat(t)
-    }
-    return result
+      }
+      return result
     }
   }
 }
