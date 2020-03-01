@@ -1,5 +1,5 @@
 <template>
-  <div class="org-tree" :class="{horizontal, collapsable}">
+  <div class="org-tree" :class="{ horizontal, collapsable }">
     <org-tree-node
       :data="dataCloned"
       :props="props"

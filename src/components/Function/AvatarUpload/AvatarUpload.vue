@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="upload-wrap">
     <Upload
       ref="upload"
       accept=".png, .jpg, .jpeg"
@@ -8,60 +8,95 @@
       :before-upload="handleUpload"
       action="/"
       type="drag"
-      style="display: inline-block;width:33vw;">
-      <div style="padding: 20px 0">
-        <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-        <p>Click or drag files here to upload</p>
-      </div>
+    >
+      <slot></slot>
     </Upload>
     <Modal
       v-model="isShow"
-      title="sssss"
+      width="650"
+      title="顔写真アップロード"
       @on-cancel="cancel"
       footer-hide
-      :mask-closable="false">
-      <div class="crop-area" v-if="imageUrl">
-        <VueCropper
-          ref="cropper"
-          :img="imageUrl"
-          :outputSize="option.size"
-          :outputType="option.outputType"
-          :info="true"
-          :full="option.full"
-          :canMove="option.canMove"
-          :canMoveBox="option.canMoveBox"
-          :fixedBox="option.fixedBox"
-          :original="option.original"
-          :autoCrop="option.autoCrop"
-          :autoCropWidth="option.autoCropWidth"
-          :autoCropHeight="option.autoCropHeight"
-          :centerBox="option.centerBox"
-          :high="option.high"
-          :maxImgSize="option.maxImageSize"
-          :enlarge="option.enlarge"
-          @realTime="realTime"
-          :mode="option.mode"/>
-      </div>
-      <div
-        v-if="previews"
-        class="show-preview"
-        :style="{'width': previews.w + 'px', 'height': previews.h + 'px',  'overflow': 'hidden', 'margin': '5px', 'border-radius': '50%'}">
-        <div :style="previews.div">
-          <img :src="previews.url" :style="previews.img" />
-        </div>
-      </div>
-      <Button @click="upload">sssss</Button>
+      :mask-closable="false"
+      draggable
+    >
+      <Row>
+        <Col span="10">
+          <div class="crop-area" v-if="imageUrl">
+            <VueCropper
+              ref="cropper"
+              :img="imageUrl"
+              :outputSize="option.size"
+              :outputType="option.outputType"
+              :info="true"
+              :full="option.full"
+              :canMove="option.canMove"
+              :canMoveBox="option.canMoveBox"
+              :fixedBox="option.fixedBox"
+              :original="option.original"
+              :autoCrop="option.autoCrop"
+              :autoCropWidth="option.autoCropWidth"
+              :autoCropHeight="option.autoCropHeight"
+              :centerBox="option.centerBox"
+              :high="option.high"
+              :maxImgSize="option.maxImageSize"
+              :enlarge="option.enlarge"
+              @realTime="realTime"
+              :mode="option.mode"
+            />
+          </div>
+        </Col>
+        <Col span="12" offset="2">
+          <div class="label">プレビュー</div>
+          <div
+            v-if="previews"
+            class="show-preview"
+            :style="{
+              width: previews.w + 'px',
+              height: previews.h + 'px',
+              overflow: 'hidden',
+              margin: '5px',
+              'border-radius': '50%'
+            }"
+          >
+            <div :style="previews.div">
+              <img :src="previews.url" :style="previews.img" />
+            </div>
+          </div>
+        </Col>
+      </Row>
+      <Button class="mtb20" @click="upload" type="primary" long>アップロード</Button>
     </Modal>
   </div>
 </template>
 <style lang="scss" scoped>
 .crop-area {
-  height: 380px;
+  display: inline-block;
+  width: 320px;
+  height: 320px;
+}
+.show-preview {
+  display: inline-block;
+}
+.label {
+  line-height: 32px;
+  margin-top: 10px;
+  background-color: $form-label;
+  color: $white;
+  width: 280px;
+  position: relative;
+  top: -12px;
+  left: 25px;
+}
+.ivu-upload-drag {
+  width: 180px;
+  height: 180px;
 }
 </style>
 <script>
 import { VueCropper } from 'vue-cropper'
-
+import { createNamespacedHelpers } from 'vuex'
+const { mapActions } = createNamespacedHelpers('user')
 export default {
   name: 'AvatarUpload',
   components: {
@@ -75,7 +110,8 @@ export default {
         full: false,
         outputType: 'png',
         canMove: true,
-        fixedBox: false,
+        // 是否固定裁剪框尺寸
+        fixedBox: true,
         original: false,
         canMoveBox: true,
         autoCrop: true,
@@ -93,10 +129,16 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['Action_User_Info_Get']),
     cancel() {
       this.isShow = false
     },
     handleUpload(file) {
+      // 通过mime type,所有图片都会带有image
+      if (file.type.indexOf('image') < 0) {
+        this.$Message.error('フォーマットはpng | jpg | jpeg | svgです')
+        return false
+      }
       const reader = new FileReader()
       reader.onload = e => (this.imageUrl = e.target.result)
       // 将图片转为base64
@@ -112,8 +154,10 @@ export default {
     upload() {
       this.$refs.cropper.getCropData(async base64Img => {
         try {
-          await this.api.profile('avatarUpload', {avatar:base64Img})
+          await this.api.profile('avatarUpload', { avatar: base64Img })
+          this.Action_User_Info_Get()
           this.$Message.success('上传成功')
+          this.isShow = false
         } catch (e) {
           console.log(e)
         }

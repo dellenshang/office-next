@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import i18n from '../i18n'
-import 'iview/dist/styles/iview.css'
+import 'view-design/dist/styles/iview.css'
 import {
   i18n as i18nHandler,
   Alert,
   Avatar,
+  Affix,
+  Anchor,
+  AnchorLink,
   BackTop,
   Button,
   Card,
@@ -61,11 +64,14 @@ import {
   Panel,
   CellGroup,
   Cell
-} from 'iview'
+} from 'view-design'
 // iview基础模块
 const iviewModule = {
   Alert,
   Avatar,
+  Affix,
+  Anchor,
+  AnchorLink,
   BackTop,
   Button,
   Card,

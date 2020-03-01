@@ -26,6 +26,10 @@ export default {
     horizontal: {
       type: Boolean,
       default: true
+    },
+    typeCode: {
+      type: [String, Number],
+      default: 99
     }
   },
   data() {
@@ -50,37 +54,32 @@ export default {
       return (
         <Poptip trigger="focus" title="">
           <Input
-            class={[
-              'custom-org-node',
-              data.children && data.children.length ? 'has-children-label' : ''
-            ]}
+            class={['custom-org-node', 'no-shadow', data.children && data.children.length ? 'has-children-label' : '']}
             maxlength={40}
             propsValue={data.name}
             on-on-enter={this.handleEnter.bind(this, data)}
             on-on-blur={this.handleEnter.bind(this, data)}
           />
-          <div
-            class={'admin-warp'}
-            onClick={this.handleConfirmer.bind(this, data)}
-          >
-            <p class={['admin', 'work']}>承認者　Aさん</p>
-            <p class={['admin', 'rest']}>承認者　Bさん</p>
-          </div>
+          {data.isAdd ? (
+            ''
+          ) : (
+            <div class={'admin-warp'} onClick={this.openModal.bind(this, data)}>
+              {!data.approveAgentList ||
+              this.typeCode === 99 ||
+              data.approveAgentList.findIndex(e => e.typeCode === this.typeCode) < 0 ? (
+                <p class={['admin', 'work']}>{data.leaderId ? `${data.leaderCode} ${data.leaderName}` : '＋ 所属長'}</p>
+              ) : (
+                <p class={['admin', 'rest']}>{this.handleApprovalConfirmer(data, this)}</p>
+              )}
+            </div>
+          )}
           <div class={'operateBtn'} slot="content">
             {!data.isAdd && data.deptId !== 1 ? (
-              <a onClick={this.handleDelete.bind(this, data)}>
-                {this.$t('master.dept.delete')}
-              </a>
+              <a onClick={this.handleDelete.bind(this, data)}>{this.$t('master.dept.delete')}</a>
             ) : (
               ''
             )}
-            {!data.isAdd ? (
-              <a onClick={this.handleAdd.bind(this, data)}>
-                {this.$t('master.dept.add')}
-              </a>
-            ) : (
-              <a>保存</a>
-            )}
+            {!data.isAdd ? <a onClick={this.handleAdd.bind(this, data)}>{this.$t('master.dept.add')}</a> : <a>保存</a>}
             <div />
           </div>
         </Poptip>
@@ -113,13 +112,24 @@ export default {
         this.$emit('update', { ...data, name: e.target.value })
       }
     },
-    handleConfirmer(data, e) {
+    openModal(data, e) {
       e.stopPropagation()
       this.$emit('confirmer', data)
     },
     handleDelete(data, e) {
       e.stopPropagation()
       this.$emit('delete', data)
+    },
+    handleApprovalConfirmer(data, context) {
+      let name = ''
+      data.approveAgentList.some(e => {
+        if (e.typeCode === context.typeCode) {
+          name = `${e.approvalCode} ${e.approvalName}`
+          return true
+        }
+      })
+      console.log(name)
+      return name
     }
   }
 }
@@ -165,13 +175,10 @@ export default {
     }
     &.rest {
       color: $red;
-      opacity: 0.4;
+      background-color: $light-pink;
+      opacity: 0.8;
       left: 75%;
       top: 71%;
-      &:hover {
-        transform: scale(1.2);
-        opacity: 1;
-      }
     }
   }
   &:hover {

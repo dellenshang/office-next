@@ -1,6 +1,6 @@
 const ja = {
   login: {
-    account: '社員コード',
+    account: 'アカウント',
     password: 'パスワード',
     forgot: 'パスワードを忘れる？',
     login: 'ログイン',
@@ -40,8 +40,8 @@ const ja = {
       operate: '操作'
     }
   },
-  happy:{
-    month:{
+  happy: {
+    month: {
       1: '一ヶ月',
       2: '二ヶ月',
       3: '三ヶ月',
@@ -53,7 +53,7 @@ const ja = {
       9: '九ヶ月',
       10: '十ヶ月',
       11: '十一ヶ月',
-      12: '十二ヶ月',
+      12: '十二ヶ月'
     }
   },
   error: 'エラー',

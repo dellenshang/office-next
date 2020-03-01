@@ -6,9 +6,9 @@ import zh_ch from './lang/zh'
 import en_us from './lang/en'
 import ja_jp from './lang/ja'
 
-import en1 from 'iview/dist/locale/en-US'
-import zh1 from 'iview/dist/locale/zh-CN'
-import ja1 from 'iview/dist/locale/ja-JP'
+import en1 from 'view-design/dist/locale/en-US'
+import zh1 from 'view-design/dist/locale/zh-CN'
+import ja1 from 'view-design/dist/locale/ja-JP'
 const i18n = new VueI18n({
   // 设置默认语言
   locale: localStorage.getItem('locale') || 'ja_jp', // 语言标识
