@@ -2,16 +2,16 @@
   <div class="layout">
     <Layout>
       <Header>
-        <Menu mode="horizontal" theme="light" :active-name="$route.meta.parentId">
+        <Menu
+          mode="horizontal"
+          theme="light"
+          :active-name="$route.meta.parentId"
+        >
           <VHeader />
         </Menu>
       </Header>
-      <Layout>
-        <Sider width="200" v-model="isCollapsed" collapsible :collapsed-width="45">
-          <Menu theme="light" width="auto" class="sider-left" :active-name="$route.meta.name">
-            <MasterSider :currentSider="$route.meta.parentId" />
-          </Menu>
-        </Sider>
+      <Layout style="padding-top: 51px;">
+          <MasterSider :currentSider="$route.meta.parentId" />
         <Layout @scroll.native.passive="handleScroll" ref="layout">
           <keep-alive :include="keepAliveRoute">
             <router-view />
@@ -26,13 +26,6 @@
   </div>
 </template>
 <style lang="scss" scoped>
-.sider-left {
-  text-align: left;
-  max-height: calc(100vh - 51px);
-  // padding-bottom: 50px;
-  // overflow-y: auto;
-  // overflow-x: hidden;
-}
 .toTopBtn {
   position: fixed;
   height: 50px;

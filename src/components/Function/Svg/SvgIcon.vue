@@ -34,9 +34,9 @@ export default {
 <style scoped>
 .i-svg {
   fill: white;
-  margin: 12px 20px 0 9px;
+  margin: 12px 10px 0 8px;
   overflow: hidden;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
 }
 </style>

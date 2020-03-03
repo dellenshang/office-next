@@ -10,89 +10,7 @@
   display: none; // 激活蓝条
 }
 
-// sider收起按钮
-.ivu-layout-sider-trigger {
-  background: transparent;
-  i {
-    background: $sider-trigger;
-    padding: 10px;
-    border-radius: 20px;
-  }
-}
-
-// 收起前
 .ivu-layout-sider-children {
-  // 采用css画出背景
-  background-image: linear-gradient(
-    to right,
-    $theme-blue 0%,
-    $theme-blue 20%,
-    $white 20%,
-    $white 100%
-  );
-  border-right: solid 1px $sider-border-right; // 侧边框线条
-  margin-top: 0;
-  .ivu-menu-item {
-    padding: 0;
-    i {
-      // css spire中不能设定宽度，否则在大图中的位置不对，会对不齐
-      height: 45px;
-      transform: scale(0.8);
-      color: $white;
-      margin-right: 2px;
-      margin-left: -3px;
-      transition: transform 0.2s ease;
-    }
-    span {
-      display: inline-block;
-      overflow: hidden;
-      width: 130px;
-    }
-    .ivu-tooltip {
-      // 使用伪元素画出上下边框线
-      &:after {
-        content: '';
-        display: inline-block;
-        position: absolute;
-        top: 46px;
-        left: 0;
-        width: 40px;
-        border-top: solid 1px $sider-item-border-t;
-      }
-      &:before {
-        content: '';
-        display: inline-block;
-         position: absolute;
-        top: 45px;
-        width: 40px;
-        border-bottom: solid 1px $sider-item-border-b;
-      }
-      .ivu-tooltip-rel {
-        height: 45px;
-      }
-      .ivu-tooltip-popper {
-        display: none;
-      }
-    }
-    &.ivu-menu-item-active {
-      span {
-        // 纠正伴随icon的高度变化
-        margin-top: -2px;
-      }
-      .ivu-tooltip {
-        &:before {
-          display: none;
-        }
-        &:after {
-          display: none;
-        }
-      }
-    }
-  }
-}
-
-// 收起后
-.ivu-layout-sider-collapsed .ivu-layout-sider-children {
   background-color: $theme-blue;
   background-image: none;
   border-right: none;
@@ -111,18 +29,5 @@
       margin-left: 5px;
     }
   }
-  .ivu-menu .ivu-tooltip {
-    &:after {
-      width: 45px;
-    }
-    &:before {
-      width: 45px;
-    }
-    .ivu-tooltip-popper {
-      display: block;
-    }
-    .ivu-tooltip-rel span {
-      display: none;
-    }
-  }
 }
+
