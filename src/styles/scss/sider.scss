@@ -9,7 +9,12 @@
   .ivu-menu-item-active:not(.ivu-menu-submenu):after {
   display: none; // 激活蓝条
 }
-
+.sys-menu-title {
+  width: 100px;
+}
+/deep/.ivu-menu-item-group-title {
+  padding: 0;
+}
 .ivu-layout-sider-children {
   background-color: $theme-blue;
   background-image: none;

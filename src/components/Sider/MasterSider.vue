@@ -6,28 +6,34 @@
         v-for="item of menu"
         :key="item.value"
         @mouseenter.stop="handleMenuHover(item.value)"
-        @mouseleave.stop="handleMenuHover(item.value)"
       >
-        <i-svg :svgName="item.icon" svgClass=""></i-svg>
+        <i-svg :svgName="item.icon" svgClass></i-svg>
       </li>
-      <li class="nav-item"><i-svg svgName="config" svgClass=""></i-svg></li>
+      <li class="nav-item">
+        <i-svg svgName="config" svgClass></i-svg>
+      </li>
     </ul>
-    <Menu theme="light" active-name="1" class="sys-menu">
+    <Menu theme="light" active-name="1" class="sys-menu" style="width:560px" @mouseenter.native="handleMenuHover(item.value)">
       <MenuGroup
         :title="e.name"
         v-for="e of menu"
         :key="e.value"
-        :class="activedSubMenu(e.value, 'sys-menu-title')"
-        @click.native="curActivatedSubMenu = e.value"
+        @mouseenter.native="handleMenuHover(item.value)"
       >
-        <MenuItem
-          v-for="t of e.children"
-          :key="t.value"
-          :name="t.value"
-          @click.native="curMenu = 0"
-        >
-          {{ t.name }}
-        </MenuItem>
+        <div v-show="curMenu===e.value">
+          <MenuItem
+            v-for="t of e.children"
+            :key="t.value"
+            :name="t.value"
+            @click.native="curMenu = 0"
+          >
+            <i-svg
+              svgName="kiwi"
+              style="width:50px;height:50px;fill: rgb(48,118,242);margin-top:12px"
+            ></i-svg>
+            <p class="p">{{ t.name }}</p>
+          </MenuItem>
+        </div>
       </MenuGroup>
     </Menu>
   </nav>
@@ -43,31 +49,66 @@
 .sys-menu {
   position: absolute;
   display: flex;
+  transform: translateX(-560px);
   height: calc(100vh - 51px);
-  width: 250px;
   left: 50px;
-  backdrop-filter: blur(5px);
+  transition: transform 0.2s ease;
+  backdrop-filter: blur(10px);
   flex-direction: column;
   align-items: flex-start;
-  z-index: 999;
+  background: rgba(240, 250, 255, 0.4);
+  // 避免压住目录本身
+  z-index: -1;
 }
-@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+@supports (not (backdrop-filter: none)) {
   .sys-menu {
     background: $box-shadow;
   }
 }
+/deep/.ivu-menu-item-group-title {
+  font-size: 18px;
+  height: 68px;
+  line-height: 68px;
+  width: 168px;
+  text-align: left;
+  color: $grey;
+}
 /deep/.ivu-menu-item-group > ul {
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  left: 100px;
+  text-align: left;
+  left: 173px;
+  transition: transform 2s ease;
   top: 0;
+  .ivu-menu-item {
+    margin: 0 2px 10px;
+    display: inline-block;
+    white-space: nowrap;
+    background: rgba(133, 190, 251, 0.18);
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.05);
+    width: 120px;
+    height: 120px;
+    &:hover {
+      box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.15);
+      svg {
+        transition: transform 0.2s ease-in-out;
+        transform: scale(1.15);
+      }
+    }
+    .p {
+      text-align: center;
+    }
+  }
 }
 .navbar {
   text-align: left;
   position: fixed;
   display: flex;
   z-index: 9999;
+  &:hover {
+    .sys-menu {
+      transform: translateX(0);
+    }
+  }
 }
 .navbar-nav {
   display: flex;
@@ -79,7 +120,26 @@
   flex-direction: column;
   .nav-item {
     display: flex;
+    height: 68px;
+    position: relative;
     align-items: center;
+    &:after {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      top: 69px;
+      left: 0;
+      width: 50px;
+      border-top: solid 1px $sider-item-border-t;
+    }
+    &:before {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      top: 68px;
+      width: 50px;
+      border-bottom: solid 1px $sider-item-border-b;
+    }
     &:last-child {
       margin-top: auto;
     }
@@ -92,12 +152,13 @@
 export default {
   data() {
     return {
+      curMenu: 1,
       theme1: 'light',
       vertical: false,
       menu: [
         {
           name: '就業入力',
-          value: '1',
+          value: 1,
           icon: 'kiwi',
           children: [
             {
@@ -131,7 +192,7 @@ export default {
         },
         {
           name: '就業承認',
-          value: '2',
+          value: 2,
           icon: 'kiwi',
           children: [
             {
@@ -182,7 +243,7 @@ export default {
         },
         {
           name: '就業管理',
-          value: '3',
+          value: 3,
           icon: 'crow',
           children: [
             {
@@ -205,45 +266,14 @@ export default {
             }
           ]
         }
-      ],
-      curMenu: 0,
-      curActivatedMenu: 0,
-      curActivatedSubMenu: 0
+      ]
     }
   },
-  computed: {
-    clicked() {
-      if (this.curMenu !== 0) return true
-      return false
-    }
-  },
+  computed: {},
   methods: {
-    clickMenu(i) {
-      this.curMenu = i
-      this.curActivatedMenu = i
-      console.log(i)
-    },
-    holdFirstMenuState(i) {
-      this.curActivatedMenu = i
-      this.curMenu = i
-    },
     handleMenuHover(e) {
-      console.log(e)
-    },
-    clickMSubMenu(i) {
-      this.curActivatedSubMenu = i
-    },
-    activedMenu(id, e) {
-      if (id === this.curActivatedMenu) {
-        return `${e} menu-selected `
-      }
-      return e
-    },
-    activedSubMenu(id, e) {
-      if (id === this.curActivatedSubMenu) {
-        return `${e} menu-selected `
-      }
-      return e
+      this.curMenu = e
+      console.log(this.curMenu)
     }
   }
 }
