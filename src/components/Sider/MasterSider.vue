@@ -13,12 +13,12 @@
         <i-svg svgName="config" svgClass></i-svg>
       </li>
     </ul>
-    <Menu theme="light" active-name="1" class="sys-menu" style="width:560px" @mouseenter.native="handleMenuHover(item.value)">
+    <Menu theme="light" active-name="1" class="sys-menu" style="width:560px">
       <MenuGroup
         :title="e.name"
         v-for="e of menu"
         :key="e.value"
-        @mouseenter.native="handleMenuHover(item.value)"
+        @mouseenter.native="handleMenuHover(e.value)"
       >
         <div v-show="curMenu===e.value">
           <MenuItem
