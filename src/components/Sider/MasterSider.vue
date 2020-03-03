@@ -67,6 +67,7 @@
   text-align: left;
   position: fixed;
   display: flex;
+  z-index: 9999;
 }
 .navbar-nav {
   display: flex;
