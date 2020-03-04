@@ -1,10 +1,8 @@
 @keyframes borderClipTop {
-  75%,90% { clip: rect(0px 45px 29px 0px); }
-  to { clip: rect(2px 45px 29px 2px);  }
+  75%,100% { clip: rect(0px 45px 29px 0px); }
 }
 @keyframes borderClipBottom {
-  75%,90% { clip: rect(85px 120px 120px 69px); }
-  to { clip: rect(85px 118px 118px 69px);  }
+  75%,100% { clip: rect(85px 120px 120px 69px); }
 }
 .ivu-layout .ivu-layout-has-sider {
   padding-top: 51px;
@@ -14,9 +12,14 @@
   display: none; //虚线
 }
 .ivu-menu-light.ivu-menu-vertical
-  .ivu-menu-item-active:not(.ivu-menu-submenu):after {
-  display: none; // 激活蓝条
-}
+  .ivu-menu-item-active:not(.ivu-menu-submenu){
+    &:before{
+      display: none;
+    }
+    &:after{
+      display: none;
+    }
+  }
 .ivu-menu-vertical .ivu-menu-item-group-title {
   font-size: 18px;
   height: 68px;
