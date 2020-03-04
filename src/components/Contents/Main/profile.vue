@@ -1,15 +1,35 @@
 <template>
   <Content class="content">
-    <Row class="stamp-warp">
-      <Col span="7" offset="5">
+    <div class="content_head tl">
+      <div class="header">
+        <i-svg
+          svgName="kiwi"
+          style="fill:rgb(45, 140, 240);margin-right: 25px;width: 44px;height: 34px;"
+        ></i-svg>
+        <div class="title1">
+          <h1>
+            打刻
+          </h1>
+        </div>
+        <div class="btnbox"></div>
+      </div>
+    </div>
+    <Row class="stamp-warp" style="margin-top:15px">
+      <Col span="6" offset="2">
         <section class="schedule">
           <span class="time-title">時間</span>
           <span class="plan-title">本日の勤務予定</span>
           <ul class="time-list">
-            <li class="li" v-for="(item, i) of scheduleTime" :key="i">{{ item }}</li>
+            <li class="li" v-for="(item, i) of scheduleTime" :key="i">
+              {{ item }}
+            </li>
           </ul>
           <span
-            :class="activated ? 'real-schedule stamp-actived' : 'real-schedule stamp-deactived'"
+            :class="
+              isActivated
+                ? 'real-schedule stamp-actived'
+                : 'real-schedule stamp-deactived'
+            "
             v-for="(item, i) of dynamicSchedule"
             :key="i"
             :style="item.style"
@@ -18,17 +38,24 @@
           </span>
         </section>
       </Col>
-      <Col span="7">
+      <Col span="6">
         <Row>
           <Col span="12"><div class="avatar"></div></Col>
-          <Col span="12" :class="activated ? 'personal-info blue' : 'personal-info'">
+          <Col
+            span="12"
+            :class="isActivated ? 'personal-info blue' : 'personal-info'"
+          >
             <div class="name mb5 mt10">田中 太郎</div>
             <div>日進サイエンティア</div>
             <div>人事部</div>
             <div>S5631</div>
           </Col>
         </Row>
-        <Clock :time="data.serverTime" @updatetime="e => (data.serverTime += e)" ref="clock" />
+        <Clock
+          :time="data.serverTime"
+          @updatetime="e => (data.serverTime += e)"
+          ref="clock"
+        />
         <Row :gutter="16">
           <Col span="12">
             <Button
@@ -43,17 +70,30 @@
             <Button v-else disabled long>出勤</Button>
           </Col>
           <Col span="12">
-            <Button type="primary" ghost @click="handleStamp('2')" long :loading="checkOutLoading">退勤</Button>
+            <Button
+              type="primary"
+              ghost
+              @click="handleStamp('2')"
+              long
+              :loading="checkOutLoading"
+              >退勤</Button
+            >
           </Col>
-          <Col span="24" class="mt20"><Button type="primary" long>残業申請</Button></Col>
+          <Col span="24" class="mt20"
+            ><Button type="primary" long>残業申請</Button></Col
+          >
           <Col span="24" class="mt20 msg">
             <p>
               出勤時刻：
-              <span>{{ data.clockOnTime ? data.clockOnTime.substring(11, 16) : '未打刻' }}</span>
+              <span>{{
+                data.clockOnTime ? data.clockOnTime.substring(11, 16) : '未打刻'
+              }}</span>
             </p>
             <p>
               退勤時刻：
-              <span>{{ data.clockOffTime ? data.clockOffTime.substring(11, 16) : '' }}</span>
+              <span>{{
+                data.clockOffTime ? data.clockOffTime.substring(11, 16) : ''
+              }}</span>
             </p>
           </Col>
         </Row>
@@ -113,7 +153,12 @@
         left: 60px;
         width: 188px;
         height: 1px;
-        background-image: linear-gradient(to right, rgb(231, 238, 246) 0%, rgb(231, 238, 246) 50%, transparent 50%);
+        background-image: linear-gradient(
+          to right,
+          rgb(231, 238, 246) 0%,
+          rgb(231, 238, 246) 50%,
+          transparent 50%
+        );
         background-size: 13px 1px;
         background-repeat: repeat-x;
       }
@@ -158,11 +203,6 @@
   }
 }
 .stamp-warp {
-  width: 1000px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   .avatar {
     display: block;
     width: 100px;
@@ -188,10 +228,18 @@
   }
 }
 .stamp-deactived {
-  background: linear-gradient(120deg, rgba(209, 210, 212, 0.8), rgba(202, 202, 202, 0.8));
+  background: linear-gradient(
+    120deg,
+    rgba(209, 210, 212, 0.8),
+    rgba(202, 202, 202, 0.8)
+  );
 }
 .stamp-actived {
-  background: linear-gradient(120deg, rgba(102, 171, 245, 0.8), rgba(86, 167, 253, 0.8));
+  background: linear-gradient(
+    120deg,
+    rgba(102, 171, 245, 0.8),
+    rgba(86, 167, 253, 0.8)
+  );
   color: white;
 }
 </style>
@@ -217,14 +265,19 @@ export default {
     }
   },
   async activated() {
-    await this.getData()
-    this.$refs.clock.showTime()
+    //  this.getData()
+    // console.log(1)
+    // this.$refs.clock.showTime()
+  },
+  mounted() {
+    //  this.getData()
+     this.$refs.clock.showTime()
   },
   deactivated() {
     this.$refs.clock.cleanClock()
   },
   computed: {
-    activated() {
+    isActivated() {
       if (this.data.clockOnTime && !this.data.clockOffTime) return true
       return false
     },
@@ -253,16 +306,21 @@ export default {
     }
   },
   methods: {
-    async getData() {
-      try {
-        const { data } = await this.api.checkIn('fetch')
-        this.data = data
-        this.scheduleData = [`${this.data.scheduleStartTime}-${this.data.scheduleEndTime}`]
-        this.data.serverTime = Date.parse(this.data.serverTime) - 1000
-        return
-      } catch (e) {
-        console.log(e)
-      }
+   getData() {
+      // try {
+      //   const { data } = await this.api.checkIn('fetch')
+      //   this.data = data
+      //   this.scheduleData = [
+      //     `${this.data.scheduleStartTime}-${this.data.scheduleEndTime}`
+      //   ]
+      //   this.data.serverTime = Date.parse(this.data.serverTime) - 1000
+      //   return
+      // } catch (e) {
+      //   console.log(e)
+      //   this.data.serverTime = Date.now()
+      // }
+      this.data.serverTime = Date.now()
+      console.log(this.data.serverTime)
     },
     async handleStamp(clockType) {
       try {

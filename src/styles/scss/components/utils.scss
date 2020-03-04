@@ -53,7 +53,10 @@
   position: fixed;
   overflow: auto;
   top: 0;
-  background: rgba(55,55,55,.6);
+  // background: rgba(55,55,55,.6);
+}
+.el-loading-mask {
+  z-index: 900 !important;
 }
 // this.$Modal.confirm警告框样式
 .ivu-modal-confirm-body {

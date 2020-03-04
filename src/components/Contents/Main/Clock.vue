@@ -22,6 +22,10 @@
 export default {
   name: 'Clock',
   props: {
+    time: {
+      type: Number,
+      default: Date.now()
+    },
     hasShadow: {
       type: Boolean,
       default: true
@@ -65,10 +69,13 @@ export default {
   },
   methods: {
     showTime() {
-      const Sever_Time = localStorage.getItem('SO_Mobile_Sever_Time')
-      const Local_Time = localStorage.getItem('SO_Mobile_Local_Time')
-      const time = Date.now() - Local_Time + +Sever_Time
-      const { dateMsg, hourMsg, week } = this.utils.getTime(time)
+      // 手机部分
+      // const Sever_Time = localStorage.getItem('SO_Mobile_Sever_Time')
+      // const Local_Time = localStorage.getItem('SO_Mobile_Local_Time')
+      // const time = Date.now() - Local_Time + +Sever_Time
+      // const { dateMsg, hourMsg, week } = this.utils.getTime(time)
+      this.$emit('updatetime', 1000)
+      const { dateMsg, hourMsg, week } = this.utils.getTime(this.time)
       this.timeView = { dateMsg, hourMsg, week }
       this.timemachine = setTimeout(this.showTime, 1000)
     },

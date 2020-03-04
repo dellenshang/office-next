@@ -9,30 +9,97 @@
   .ivu-menu-item-active:not(.ivu-menu-submenu):after {
   display: none; // 激活蓝条
 }
-.sys-menu-title {
-  width: 100px;
+.ivu-menu-vertical .ivu-menu-item-group-title {
+  font-size: 18px;
+  height: 68px;
+  line-height: 68px;
+  width: 168px;
+  text-align: left;
+  color: $grey;
 }
-/deep/.ivu-menu-item-group-title {
-  padding: 0;
-}
-.ivu-layout-sider-children {
-  background-color: $theme-blue;
-  background-image: none;
-  border-right: none;
+.ivu-menu-item-group > ul {
+  position: absolute;
+  text-align: left;
+  left: 173px;
+  transition: transform 2s ease;
+  top: 0;
   .ivu-menu-item {
-    text-overflow: unset;
-    i {
-      height: 45px;
-      transform: translateX(-5px) scale(1);
-      border: none;
-      transition: transform 0.2s ease 0.2s;
-      vertical-align: middle;
-      margin-left: 5px;
+    margin: 0 2px 4px;
+    display: inline-block;
+    white-space: nowrap;
+    background: rgba(122, 182, 247, 0.18);
+    width: 120px;
+    height: 120px;
+    &:hover {
+      svg {
+        transition: fill 0.1s ease-in-out;
+        fill: white !important;
+      }
     }
-    &.ivu-menu-item-selected i {
-      height: 45px;
-      margin-left: 5px;
+    .p {
+      width: 120px;
+      margin-left: -25px;
+      text-align: center;
     }
   }
 }
-
+.actived-menu {
+  &.nav-item {
+    transition: background-color 0.2s ease;
+    background-color: rgb(240, 250, 255);
+  }
+  .ivu-menu-item-group-title {
+    color: $primary;
+  }
+}
+.navbar-wrap {
+  display: flex;
+  position: fixed;
+  text-align: left;
+  z-index: 999;
+  .navbar-nav {
+    display: flex;
+    width: 50px;
+    background: $theme-blue;
+    transition: width 200ms ease;
+    text-align: left;
+    height: calc(100vh - 51px);
+    flex-direction: column;
+    .nav-item {
+      display: flex;
+      height: 68px;
+      position: relative;
+      align-items: center;
+      &:last-child {
+        margin-top: auto;
+      }
+    }
+  }
+  .sys-menu {
+    display: flex;
+    position: absolute;
+    left: 50px;
+    flex-direction: column;
+    align-items: flex-start;
+    height: calc(100vh - 51px);
+    background: rgba(240, 250, 255, 0.4);
+    backdrop-filter: blur(10px);
+    box-shadow: 1px 3px 3px rgb(210, 231, 250);
+    transition: transform 0.2s ease;
+    opacity: 0;
+    transform: translateX(-560px);
+    // 避免压住目录本身
+    z-index: -1;
+  }
+  &:hover {
+    .sys-menu {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+}
+@supports (not (backdrop-filter: none)) {
+  .sys-menu {
+    background: $box-shadow;
+  }
+}
