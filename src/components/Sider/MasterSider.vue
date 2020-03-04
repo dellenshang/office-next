@@ -19,7 +19,7 @@
         <i-svg svgName="config" svgClass></i-svg>
       </li>
     </ul>
-    <Menu theme="light" active-name="1" class="sys-menu" style="width:560px">
+    <Menu theme="light" active-name="1" class="sys-menu" style="width:555px">
       <MenuGroup
         :title="e.name"
         v-for="e of menu"

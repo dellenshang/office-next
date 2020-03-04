@@ -1,3 +1,11 @@
+@keyframes borderClipTop {
+  75%,90% { clip: rect(0px 45px 29px 0px); }
+  to { clip: rect(2px 45px 29px 2px);  }
+}
+@keyframes borderClipBottom {
+  75%,90% { clip: rect(85px 120px 120px 69px); }
+  to { clip: rect(85px 118px 118px 69px);  }
+}
 .ivu-layout .ivu-layout-has-sider {
   padding-top: 51px;
 }
@@ -30,7 +38,32 @@
     background: rgba(122, 182, 247, 0.18);
     width: 120px;
     height: 120px;
+    &:before {
+      content: '';
+      display: none;
+      position: absolute;
+      left: 0; top: 0; right: 0; bottom: 0;
+      border: 2px solid $text-green;
+      clip: rect(74px 120px 120px 98px);
+
+    }
+    &:after{
+      content: '';
+      display: none;
+      position: absolute;
+      left: 0; top: 0; right: 0; bottom: 0;
+      border: 2px solid $primary;
+      clip: rect(0px 35px 52px 0px);
+    }
     &:hover {
+      &:before {
+        display: block;
+        animation: borderClipBottom .5s forwards ease-in;
+      }
+      &:after{
+        display: block;
+        animation: borderClipTop .5s forwards ease-in;
+      }
       svg {
         transition: fill 0.1s ease-in-out;
         fill: white !important;
@@ -87,7 +120,7 @@
     box-shadow: 1px 3px 3px rgb(210, 231, 250);
     transition: transform 0.2s ease;
     opacity: 0;
-    transform: translateX(-560px);
+    transform: translateX(-555px);
     // 避免压住目录本身
     z-index: -1;
   }
