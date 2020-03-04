@@ -4,7 +4,7 @@
       <div class="header" style="height: 45px;">
         <i-svg
           svgName="kiwi"
-          style="fill:rgb(45, 140, 240);margin-right: 25px;width: 44px;height: 34px;"
+          style="fill:rgb(45, 140, 240);margin-right: 25px;width: 44px;height: 28px;"
         ></i-svg>
         <div class="title1">
           <h1>打刻</h1>
