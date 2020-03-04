@@ -1,28 +1,24 @@
 <template>
   <Content class="content">
-    <div class="content_head tl">
-      <div class="header">
+    <div class="content_head">
+      <div class="header" style="height: 45px;">
         <i-svg
           svgName="kiwi"
           style="fill:rgb(45, 140, 240);margin-right: 25px;width: 44px;height: 34px;"
         ></i-svg>
         <div class="title1">
-          <h1>
-            打刻
-          </h1>
+          <h1>打刻</h1>
         </div>
         <div class="btnbox"></div>
       </div>
     </div>
-    <Row class="stamp-warp" style="margin-top:15px">
-      <Col span="6" offset="2">
+    <Row class="stamp-warp" style="margin-top:20px">
+      <Col span="10" offset="2">
         <section class="schedule">
           <span class="time-title">時間</span>
           <span class="plan-title">本日の勤務予定</span>
           <ul class="time-list">
-            <li class="li" v-for="(item, i) of scheduleTime" :key="i">
-              {{ item }}
-            </li>
+            <li class="li" v-for="(item, i) of scheduleTime" :key="i">{{ item }}</li>
           </ul>
           <span
             :class="
@@ -33,67 +29,57 @@
             v-for="(item, i) of dynamicSchedule"
             :key="i"
             :style="item.style"
-          >
-            {{ item.time }}
-          </span>
+          >{{ item.time }}</span>
         </section>
       </Col>
-      <Col span="6">
-        <Row>
-          <Col span="12"><div class="avatar"></div></Col>
-          <Col
-            span="12"
-            :class="isActivated ? 'personal-info blue' : 'personal-info'"
-          >
-            <div class="name mb5 mt10">田中 太郎</div>
-            <div>日進サイエンティア</div>
-            <div>人事部</div>
-            <div>S5631</div>
-          </Col>
-        </Row>
-        <Clock
-          :time="data.serverTime"
-          @updatetime="e => (data.serverTime += e)"
-          ref="clock"
-        />
+      <Col span="9" offset="1">
+        <Clock :time="data.serverTime" @updatetime="e => (data.serverTime += e)" ref="clock" />
         <Row :gutter="16">
           <Col span="12">
             <Button
-              type="primary"
               long
               @click="handleStamp('1')"
+              style="height:80px;font-size:28px;background:rgb(238, 247, 255);border:none"
               :loading="checkInLoading"
               v-if="!this.data.clockOnTime"
-            >
-              出勤
-            </Button>
-            <Button v-else disabled long>出勤</Button>
+            >出勤</Button>
+            <Button
+              v-else
+              disabled
+              long
+              style="height:80px;font-size:28px;background:rgb(238, 247, 255);border:none"
+            >出勤</Button>
           </Col>
           <Col span="12">
             <Button
-              type="primary"
-              ghost
               @click="handleStamp('2')"
+              style="height:80px;font-size:28px;background:rgb(238, 247, 255);border:none"
               long
               :loading="checkOutLoading"
-              >退勤</Button
-            >
+            >退勤</Button>
           </Col>
-          <Col span="24" class="mt20"
-            ><Button type="primary" long>残業申請</Button></Col
-          >
+          <Col span="24" class="mt20">
+            <Button
+              long
+              style="height:53px;font-size:18px;background:rgb(238, 247, 255);border:none"
+            >残業申請</Button>
+          </Col>
           <Col span="24" class="mt20 msg">
             <p>
               出勤時刻：
-              <span>{{
+              <span>
+                {{
                 data.clockOnTime ? data.clockOnTime.substring(11, 16) : '未打刻'
-              }}</span>
+                }}
+              </span>
             </p>
             <p>
               退勤時刻：
-              <span>{{
+              <span>
+                {{
                 data.clockOffTime ? data.clockOffTime.substring(11, 16) : ''
-              }}</span>
+                }}
+              </span>
             </p>
           </Col>
         </Row>
@@ -104,7 +90,7 @@
 <style lang="scss" scoped>
 .schedule {
   box-sizing: border-box;
-  width: 250px;
+  width: 500px;
   height: 555px;
   font-size: 0;
   border: 1px solid rgb(231, 238, 246);
@@ -113,23 +99,23 @@
   .time-title {
     display: inline-block;
     text-align: center;
-    width: 60px;
+    width: 100px;
     height: 40px;
     border-right: 1px solid rgb(231, 238, 246);
     border-bottom: 1px solid rgb(231, 238, 246);
     line-height: 40px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     background-color: rgb(243, 248, 255);
   }
   .plan-title {
     display: inline-block;
-    width: 188px;
+    width: 398px;
     height: 40px;
     text-align: center;
     border-bottom: 1px solid rgb(231, 238, 246);
     line-height: 40px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     background-color: rgb(243, 248, 255);
   }
@@ -150,8 +136,8 @@
         position: absolute;
         // 边框各占一个像素，所以是42
         top: 42px;
-        left: 60px;
-        width: 188px;
+        left: 100px;
+        width: 398px;
         height: 1px;
         background-image: linear-gradient(
           to right,
@@ -167,8 +153,8 @@
         display: inline-block;
         position: absolute;
         top: 20px;
-        left: 60px;
-        width: 188px;
+        left: 100px;
+        width: 398px;
         border-top: solid 1px rgb(231, 238, 246);
       }
     }
@@ -177,7 +163,7 @@
       display: inline-block;
       position: absolute;
       top: 0px;
-      left: 59px;
+      left: 99px;
       width: 1px;
       height: 512px;
       border-left: solid 1px #e7eef6;
@@ -186,8 +172,8 @@
   .real-schedule {
     display: block;
     position: absolute;
-    left: 85px;
-    width: 130px;
+    left: 205px;
+    width: 200px;
     font-size: 13px;
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 1s;
@@ -211,9 +197,9 @@
     border-radius: 50%;
   }
   .msg {
-    height: 130px;
+    height: 175px;
     background-color: $light-grey;
-    font-size: 13px;
+    font-size: 16px;
     padding: 10px;
     p {
       margin: 5px;
@@ -228,11 +214,7 @@
   }
 }
 .stamp-deactived {
-  background: linear-gradient(
-    120deg,
-    rgba(209, 210, 212, 0.8),
-    rgba(202, 202, 202, 0.8)
-  );
+  background: rgba(221, 224, 226, 0.42);
 }
 .stamp-actived {
   background: linear-gradient(
@@ -271,7 +253,7 @@ export default {
   },
   mounted() {
     //  this.getData()
-     this.$refs.clock.showTime()
+    this.$refs.clock.showTime()
   },
   deactivated() {
     this.$refs.clock.cleanClock()
@@ -306,7 +288,7 @@ export default {
     }
   },
   methods: {
-   getData() {
+    getData() {
       // try {
       //   const { data } = await this.api.checkIn('fetch')
       //   this.data = data
