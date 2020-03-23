@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["chunk-2d237b50"],{fbec:function(t,n,e){"use strict";e.r(n);var c={name:"DeptSumInfo"},s=e("2877"),a=Object(s.a)(c,(function(){var t=this,n=t.$createElement,e=t._self._c||n;return e("Content",{staticClass:"content"},[e("div",{staticClass:"content_head"},[t._v("开发中")])])}),[],!1,null,"119d2081",null);n.default=a.exports}}]);

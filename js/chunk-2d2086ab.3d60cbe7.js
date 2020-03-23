@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["chunk-2d2086ab"],{a567:function(t,e,n){"use strict";n.r(e);var a={name:"FreeSearch"},c=n("2877"),s=Object(c.a)(a,(function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("Content",{staticClass:"content"},[n("div",{staticClass:"content_head"},[t._v("开发中")])])}),[],!1,null,"669c7928",null);e.default=s.exports}}]);
